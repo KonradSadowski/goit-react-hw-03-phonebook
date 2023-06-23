@@ -4,8 +4,20 @@ class ContactForm extends Component {
   state = {
     name: '',
     number: '',
+    contacts: [],
   };
 
+  componentDidMount() {
+    const storedContacts = localStorage.getItem('contacts');
+    if (storedContacts) {
+      this.setState({ contacts: JSON.parse(storedContacts) });
+    }
+  }
+
+  componentDidUpdate() {
+    const { contacts } = this.state;
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
